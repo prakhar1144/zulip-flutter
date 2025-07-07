@@ -11,6 +11,7 @@ import 'package:url_launcher/url_launcher.dart' as url_launcher;
 import 'package:wakelock_plus/wakelock_plus.dart' as wakelock_plus;
 
 import '../host/android_notifications.dart';
+import '../host/notifications.dart' as notif_pigeon;
 import '../log.dart';
 import '../widgets/store.dart';
 import 'store.dart';
@@ -120,6 +121,11 @@ abstract class ZulipBinding {
   /// This wraps [url_launcher.closeInAppWebView].
   Future<void> closeInAppWebView();
 
+  /// Provides access to the current UTC date and time.
+  ///
+  /// Outside tests, this just calls [DateTime.timestamp].
+  DateTime utcNow();
+
   /// Provides access to a new stopwatch.
   ///
   /// Outside tests, this just calls the [Stopwatch] constructor.
@@ -174,6 +180,9 @@ abstract class ZulipBinding {
 
   /// Wraps the [AndroidNotificationHostApi] constructor.
   AndroidNotificationHostApi get androidNotificationHost;
+
+  /// Wraps the [notif_pigeon.NotificationHostApi] class.
+  NotificationPigeonApi get notificationPigeonApi;
 
   /// Pick files from the media library, via package:file_picker.
   ///
@@ -310,11 +319,26 @@ class LinuxDeviceInfo implements BaseDeviceInfo {
 class PackageInfo {
   final String version;
   final String buildNumber;
+  final String packageName;
 
   const PackageInfo({
     required this.version,
     required this.buildNumber,
+    required this.packageName,
   });
+}
+
+// Pigeon generates methods under `@EventChannelApi` annotated classes
+// in global scope of the generated file. This is a helper class to
+// namespace the notification related Pigeon API under a single class.
+class NotificationPigeonApi {
+  final _hostApi = notif_pigeon.NotificationHostApi();
+
+  Future<notif_pigeon.NotificationDataFromLaunch?> getNotificationDataFromLaunch() =>
+    _hostApi.getNotificationDataFromLaunch();
+
+  Stream<notif_pigeon.NotificationTapEvent> notificationTapEventsStream() =>
+    notif_pigeon.notificationTapEvents();
 }
 
 /// A concrete binding for use in the live application.
@@ -382,6 +406,9 @@ class LiveZulipBinding extends ZulipBinding {
   }
 
   @override
+  DateTime utcNow() => DateTime.timestamp();
+
+  @override
   Stopwatch stopwatch() => Stopwatch();
 
   @override
@@ -427,6 +454,7 @@ class LiveZulipBinding extends ZulipBinding {
       _syncPackageInfo = PackageInfo(
         version: info.version,
         buildNumber: info.buildNumber,
+        packageName: info.packageName,
       );
     } catch (e, st) {
       assert(debugLog('Failed to prefetch package info: $e\n$st')); // TODO(log)
@@ -457,6 +485,9 @@ class LiveZulipBinding extends ZulipBinding {
 
   @override
   AndroidNotificationHostApi get androidNotificationHost => AndroidNotificationHostApi();
+
+  @override
+  NotificationPigeonApi get notificationPigeonApi => NotificationPigeonApi();
 
   @override
   Future<file_picker.FilePickerResult?> pickFiles({

@@ -43,209 +43,121 @@ class _SingleChildScrollViewWithScrollbarState
   }
 }
 
-/// Specifies an order in which to paint the slivers of a [CustomScrollView].
+/// A simulation of motion at a constant velocity.
 ///
-/// Whichever order the slivers are painted in,
-/// they will be hit-tested in the opposite order.
+/// Models a particle that follows Newton's law of inertia,
+/// with no forces acting on the particle, and no end to the motion.
 ///
-/// This can also be thought of as an ordering in the z-direction:
-/// whichever sliver is painted last (and hit-tested first) is on top,
-/// because it will paint over other slivers if there is overlap.
-/// Similarly, whichever sliver is painted first (and hit-tested last)
-/// is on the bottom.
-enum SliverPaintOrder {
-  /// The first sliver paints on top, and the last sliver on bottom.
-  ///
-  /// The slivers are painted in the reverse order of [CustomScrollView.slivers],
-  /// and hit-tested in the same order as [CustomScrollView.slivers].
-  firstIsTop,
+/// See also [GravitySimulation], which adds a constant acceleration
+/// and a stopping point.
+class InertialSimulation extends Simulation { // TODO(upstream)
+  InertialSimulation(double initialPosition, double velocity)
+   : _x0 = initialPosition, _v = velocity;
 
-  /// The last sliver paints on top, and the first sliver on bottom.
-  ///
-  /// The slivers are painted in the same order as [CustomScrollView.slivers],
-  /// and hit-tested in the reverse order.
-  lastIsTop,
-
-  /// The default order for [CustomScrollView]: the center sliver paints on top,
-  /// and the first sliver paints on bottom.
-  ///
-  /// If [CustomScrollView.center] is null or corresponds to the first sliver
-  /// in [CustomScrollView.slivers], this order is equivalent to [firstIsTop].
-  /// Otherwise, the [CustomScrollView.center] sliver paints on top;
-  /// it's followed in the z-order by the slivers after it to the end
-  /// of the list, then the slivers before the center in reverse order,
-  /// with the first sliver in the list at the bottom in the z-direction.
-  centerTopFirstBottom,
-}
-
-/// A [CustomScrollView] with control over the paint order, or z-order,
-/// between slivers.
-///
-/// This is just like [CustomScrollView] except it adds the [paintOrder_] field.
-///
-/// (Actually there's one [CustomScrollView] feature this doesn't implement:
-/// [shrinkWrap] always has its default value of false.  That feature would be
-/// easy to add if desired.)
-// TODO(upstream): Pending PR: https://github.com/flutter/flutter/pull/164818
-//   Notes from before sending that PR:
-//   Add an option [ScrollView.zOrder]?  (An enum, or possibly
-//   a delegate.)  Or at minimum document on [ScrollView.center] the
-//   existing behavior, which is counterintuitive.
-//   Nearest related upstream feature requests I find are for a "z-index",
-//   for CustomScrollView, Column, Row, and Stack respectively:
-//     https://github.com/flutter/flutter/issues/121173#issuecomment-1712825747
-//     https://github.com/flutter/flutter/issues/121173
-//     https://github.com/flutter/flutter/issues/121173#issuecomment-1914959184
-//     https://github.com/flutter/flutter/issues/70836
-//   A delegate would give enough flexibility for that and much else,
-//   but I'm not sure how many use cases wouldn't be covered by a small enum.
-//
-//   Ah, and here's a more on-point issue (more recently):
-//     https://github.com/flutter/flutter/issues/145592
-//
-// TODO: perhaps sticky_header should configure a CustomPaintOrderScrollView automatically?
-class CustomPaintOrderScrollView extends CustomScrollView {
-  const CustomPaintOrderScrollView({
-    super.key,
-    super.scrollDirection,
-    super.reverse,
-    super.controller,
-    super.primary,
-    super.physics,
-    super.scrollBehavior,
-    // super.shrinkWrap, // omitted, always false
-    super.center,
-    super.anchor,
-    super.cacheExtent,
-    super.slivers,
-    super.semanticChildCount,
-    super.dragStartBehavior,
-    super.keyboardDismissBehavior,
-    super.restorationId,
-    super.clipBehavior,
-    super.hitTestBehavior,
-    SliverPaintOrder paintOrder = SliverPaintOrder.centerTopFirstBottom,
-  }) : paintOrder_ = paintOrder;
-
-  /// The order in which to paint the slivers;
-  /// equivalently, the order in which to arrange them in the z-direction.
-  ///
-  /// Whichever order the slivers are painted in,
-  /// they will be hit-tested in the opposite order.
-  ///
-  /// To think of this as an ordering in the z-direction:
-  /// whichever sliver is painted last (and hit-tested first) is on top,
-  /// because it will paint over other slivers if there is overlap.
-  /// Similarly, whichever sliver is painted first (and hit-tested last)
-  /// is on the bottom.
-  ///
-  /// This defaults to [SliverPaintOrder.centerTopFirstBottom],
-  /// the behavior of the [CustomScrollView] base class.
-  final SliverPaintOrder paintOrder_;
+  final double _x0;
+  final double _v;
 
   @override
-  Widget buildViewport(BuildContext context, ViewportOffset offset,
-      AxisDirection axisDirection, List<Widget> slivers) {
-    return CustomPaintOrderViewport(
-      axisDirection: axisDirection,
-      offset: offset,
-      slivers: slivers,
-      cacheExtent: cacheExtent,
-      center: center,
-      anchor: anchor,
-      clipBehavior: clipBehavior,
-      paintOrder_: paintOrder_,
-    );
-  }
-}
-
-/// The viewport configured by a [CustomPaintOrderScrollView].
-class CustomPaintOrderViewport extends Viewport {
-  CustomPaintOrderViewport({
-    super.key,
-    super.axisDirection,
-    super.crossAxisDirection,
-    super.anchor,
-    required super.offset,
-    super.center,
-    super.cacheExtent,
-    super.cacheExtentStyle,
-    super.slivers,
-    super.clipBehavior,
-    required this.paintOrder_,
-  });
-
-  final SliverPaintOrder paintOrder_;
+  double x(double time) => _x0 + _v * time;
 
   @override
-  RenderViewport createRenderObject(BuildContext context) {
-    return RenderCustomPaintOrderViewport(
-      axisDirection: axisDirection,
-      crossAxisDirection: crossAxisDirection
-        ?? Viewport.getDefaultCrossAxisDirection(context, axisDirection),
-      anchor: anchor,
-      offset: offset,
-      cacheExtent: cacheExtent,
-      cacheExtentStyle: cacheExtentStyle,
-      clipBehavior: clipBehavior,
-      paintOrder_: paintOrder_,
-    );
-  }
+  double dx(double time) => _v;
+
+  @override
+  bool isDone(double time) => false;
+
+  @override
+  String toString() => '${objectRuntimeType(this, 'InertialSimulation')}('
+    'x₀: ${_x0.toStringAsFixed(1)}, dx₀: ${_v.toStringAsFixed(1)})';
 }
 
-/// The render object configured by a [CustomPaintOrderViewport].
-class RenderCustomPaintOrderViewport extends RenderViewport {
-  RenderCustomPaintOrderViewport({
-    super.axisDirection,
-    required super.crossAxisDirection,
-    required super.offset,
-    super.anchor,
-    super.children,
-    super.center,
-    super.cacheExtent,
-    super.cacheExtentStyle,
-    super.clipBehavior,
-    required this.paintOrder_,
-  });
+/// A simulation of the user impatiently scrolling to the end of a list.
+///
+/// The position [x] is in logical pixels, and time is in seconds.
+///
+/// The motion is meant to resemble the user scrolling the list down
+/// (by dragging up and flinging), and if the list is long then
+/// fling-scrolling again and again to keep it moving quickly.
+///
+/// In that scenario taken literally, the motion would repeatedly slow down,
+/// then speed up again with a fresh drag and fling.  But doing that in
+/// response to a simulated drag, as opposed to when the user is actually
+/// dragging with their own finger, would feel jerky and not a good UX.
+/// Instead this takes a smoothed-out approximation of such a trajectory.
+class ScrollToEndSimulation extends InertialSimulation {
+  factory ScrollToEndSimulation(ScrollPosition position) {
+    final tolerance = position.physics.toleranceFor(position);
+    final startPosition = position.pixels;
+    final estimatedEndPosition = position.maxScrollExtent;
+    final velocityForMinDuration = (estimatedEndPosition - startPosition)
+      / (minDuration.inMilliseconds / 1000.0);
+    final velocity = clampDouble(velocityForMinDuration,
+      // If the starting position is beyond the estimated end
+      // (i.e. `velocityForMinDuration < 0`), or very close to it,
+      // then move forward at a small positive velocity.
+      // Let the overscroll handling bring the position to exactly the end.
+      2 * tolerance.velocity,
+      topSpeed);
+    return ScrollToEndSimulation._(startPosition, velocity);
+  }
 
-  final SliverPaintOrder paintOrder_;
+  ScrollToEndSimulation._(super.initialPosition, super.velocity);
 
-  Iterable<RenderSliver> get _lastToFirst {
-    final List<RenderSliver> children = <RenderSliver>[];
-    RenderSliver? child = lastChild;
-    while (child != null) {
-      children.add(child);
-      child = childBefore(child);
+  /// The top speed to move at, in logical pixels per second.
+  ///
+  /// This will be the speed whenever the estimated distance to be traveled
+  /// is long enough to take at least [minDuration] at this speed.
+  ///
+  /// This is chosen to equal the top speed that can be produced
+  /// by a fling gesture in a Flutter [ScrollView],
+  /// which in turn was chosen to equal the top speed of
+  /// an (initial) fling gesture in a native Android scroll view.
+  static const double topSpeed = 8000;
+
+  /// The desired duration of the animation when traveling short distances.
+  ///
+  /// The speed will be chosen so that traveling the estimated distance
+  /// will take this long, whenever that distance is short enough
+  /// that that means a speed of at most [topSpeed].
+  static const minDuration = Duration(milliseconds: 300);
+}
+
+/// An activity that animates a scroll view smoothly to its end.
+///
+/// In particular this drives the "scroll to bottom" button
+/// in the Zulip message list.
+class ScrollToEndActivity extends DrivenScrollActivity {
+  /// Create an activity that animates a scroll view smoothly to its end.
+  ///
+  /// The [delegate] is required to also implement [ScrollPosition].
+  ScrollToEndActivity(ScrollActivityDelegate delegate)
+    : super.simulation(delegate,
+        vsync: (delegate as ScrollPosition).context.vsync,
+        ScrollToEndSimulation(delegate as ScrollPosition));
+
+  ScrollPosition get _position => delegate as ScrollPosition;
+
+  @override
+  bool applyMoveTo(double value) {
+    bool done = false;
+    if (value > _position.maxScrollExtent) {
+      // The activity has reached the end.
+      // Stop at exactly the end, rather than causing overscroll.
+      // Possibly some overscroll would actually be desirable, but:
+      // TODO(upstream) stretch-overscroll seems busted, inverted:
+      //   Is this formula (from [_StretchController.absorbImpact] really right?
+      //     _stretchSizeTween.end =
+      //       math.min(_stretchIntensity + (_flingFriction / velocity), 1.0);
+      //   Seems to take low velocity to the largest stretch, and high velocity
+      //   to the smallest stretch.
+      //   Specifically, a very slow fling produces a very large stretch,
+      //   while other flings produce small stretches that vary little
+      //   between modest speed (~300 px/s) and top speed (8000 px/s).
+      value = _position.maxScrollExtent;
+      done = true;
     }
-    return children;
-  }
-
-  Iterable<RenderSliver> get _firstToLast {
-    final List<RenderSliver> children = <RenderSliver>[];
-    RenderSliver? child = firstChild;
-    while (child != null) {
-      children.add(child);
-      child = childAfter(child);
-    }
-    return children;
-  }
-
-  @override
-  Iterable<RenderSliver> get childrenInPaintOrder {
-    return switch (paintOrder_) {
-      SliverPaintOrder.firstIsTop => _lastToFirst,
-      SliverPaintOrder.lastIsTop => _firstToLast,
-      SliverPaintOrder.centerTopFirstBottom => super.childrenInPaintOrder,
-    };
-  }
-
-  @override
-  Iterable<RenderSliver> get childrenInHitTestOrder {
-    return switch (paintOrder_) {
-      SliverPaintOrder.firstIsTop => _firstToLast,
-      SliverPaintOrder.lastIsTop => _lastToFirst,
-      SliverPaintOrder.centerTopFirstBottom => super.childrenInHitTestOrder,
-    };
+    if (!super.applyMoveTo(value)) return false;
+    return !done;
   }
 }
 
@@ -333,10 +245,13 @@ class MessageListScrollPosition extends ScrollPositionWithSingleContext {
 
     if (!_hasEverCompletedLayout) {
       // The list is being laid out for the first time (its first performLayout).
-      // Start out scrolled to the end.
+      // Start out scrolled down so the bottom sliver (the new messages)
+      // occupies 75% of the viewport,
+      // or at the in-range scroll position closest to that.
       // This also brings [pixels] within bounds, which
       // the initial value of 0.0 might not have been.
-      final target = maxScrollExtent;
+      final target = clampDouble(0.75 * viewportDimension,
+        minScrollExtent, maxScrollExtent);
       if (!hasPixels || pixels != target) {
         correctPixels(target);
         changed = true;
@@ -373,6 +288,36 @@ class MessageListScrollPosition extends ScrollPositionWithSingleContext {
 
     return !changed;
   }
+
+  /// Scroll the position smoothly to the end of the scrollable content.
+  ///
+  /// This is similar to calling [animateTo] with a target of [maxScrollExtent],
+  /// except that if [maxScrollExtent] changes over the course of the animation
+  /// (for example due to more content being added at the end,
+  /// or due to the estimated length of the content changing as
+  /// different items scroll into the viewport),
+  /// this animation will carry on until it reaches the updated value
+  /// of [maxScrollExtent], not the value it had at the start of the animation.
+  ///
+  /// The animation is typically handled by a [ScrollToEndActivity].
+  void scrollToEnd() {
+    final tolerance = physics.toleranceFor(this);
+    if (nearEqual(pixels, maxScrollExtent, tolerance.distance)) {
+      // Skip the animation; jump right to the target, which is already close.
+      jumpTo(maxScrollExtent);
+      return;
+    }
+
+    if (pixels > maxScrollExtent) {
+      // The position is already scrolled past the end.  Let overscroll handle it.
+      // (This situation shouldn't even arise; the UI only offers this option
+      // when `pixels < maxScrollExtent`.)
+      goBallistic(0.0);
+      return;
+    }
+
+    beginActivity(ScrollToEndActivity(this));
+  }
 }
 
 /// A version of [ScrollController] adapted for the Zulip message list.
@@ -386,7 +331,10 @@ class MessageListScrollController extends ScrollController {
   });
 
   @override
-  ScrollPosition createScrollPosition(ScrollPhysics physics,
+  MessageListScrollPosition get position => super.position as MessageListScrollPosition;
+
+  @override
+  MessageListScrollPosition createScrollPosition(ScrollPhysics physics,
       ScrollContext context, ScrollPosition? oldPosition) {
     return MessageListScrollPosition(
       physics: physics,
@@ -403,7 +351,7 @@ class MessageListScrollController extends ScrollController {
 ///
 /// This lets us customize behavior in ways that aren't currently supported
 /// by the fields of [CustomScrollView] itself.
-class MessageListScrollView extends CustomPaintOrderScrollView {
+class MessageListScrollView extends CustomScrollView {
   const MessageListScrollView({
     super.key,
     super.scrollDirection,
@@ -435,13 +383,13 @@ class MessageListScrollView extends CustomPaintOrderScrollView {
       cacheExtent: cacheExtent,
       center: center,
       clipBehavior: clipBehavior,
-      paintOrder_: paintOrder_,
+      paintOrder: paintOrder,
     );
   }
 }
 
 /// The version of [Viewport] that underlies [MessageListScrollView].
-class MessageListViewport extends CustomPaintOrderViewport {
+class MessageListViewport extends Viewport {
   MessageListViewport({
     super.key,
     super.axisDirection,
@@ -452,7 +400,7 @@ class MessageListViewport extends CustomPaintOrderViewport {
     super.cacheExtentStyle,
     super.slivers,
     super.clipBehavior,
-    required super.paintOrder_,
+    required super.paintOrder,
   });
 
   @override
@@ -465,7 +413,7 @@ class MessageListViewport extends CustomPaintOrderViewport {
       cacheExtent: cacheExtent,
       cacheExtentStyle: cacheExtentStyle,
       clipBehavior: clipBehavior,
-      paintOrder_: paintOrder_,
+      paintOrder: paintOrder,
     );
   }
 }
@@ -474,7 +422,7 @@ class MessageListViewport extends CustomPaintOrderViewport {
 /// and [MessageListScrollView].
 // TODO(upstream): Devise upstream APIs to obviate the duplicated code here;
 //   use `git log -L` to see what edits we've made locally.
-class RenderMessageListViewport extends RenderCustomPaintOrderViewport {
+class RenderMessageListViewport extends RenderViewport {
   RenderMessageListViewport({
     super.axisDirection,
     required super.crossAxisDirection,
@@ -484,7 +432,7 @@ class RenderMessageListViewport extends RenderCustomPaintOrderViewport {
     super.cacheExtent,
     super.cacheExtentStyle,
     super.clipBehavior,
-    required super.paintOrder_,
+    required super.paintOrder,
   });
 
   @override

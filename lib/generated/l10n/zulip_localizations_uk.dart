@@ -21,6 +21,20 @@ class ZulipLocalizationsUk extends ZulipLocalizations {
   String get aboutPageTapToView => 'Натисніть, щоб переглянути';
 
   @override
+  String get upgradeWelcomeDialogTitle =>
+      'Ласкаво просимо у новий додаток Zulip!';
+
+  @override
+  String get upgradeWelcomeDialogMessage =>
+      'Ви знайдете звичні можливості у більш швидкому і легкому додатку.';
+
+  @override
+  String get upgradeWelcomeDialogLinkText => 'Ознайомтесь з анонсом у блозі!';
+
+  @override
+  String get upgradeWelcomeDialogDismiss => 'Ходімо!';
+
+  @override
   String get chooseAccountPageTitle => 'Обрати обліковий запис';
 
   @override
@@ -44,7 +58,8 @@ class ZulipLocalizationsUk extends ZulipLocalizations {
   String get logOutConfirmationDialogTitle => 'Вийти?';
 
   @override
-  String get logOutConfirmationDialogMessage => 'Щоб використовувати цей обліковий запис у майбутньому, вам доведеться повторно ввести його дані та URL-адресу вашої організації.';
+  String get logOutConfirmationDialogMessage =>
+      'Щоб використовувати цей обліковий запис у майбутньому, вам доведеться повторно ввести його дані та URL-адресу вашої організації.';
 
   @override
   String get logOutConfirmationDialogConfirmButton => 'Вийти';
@@ -53,10 +68,12 @@ class ZulipLocalizationsUk extends ZulipLocalizations {
   String get chooseAccountButtonAddAnAccount => 'Додати обліковий запис';
 
   @override
-  String get profileButtonSendDirectMessage => 'Надіслати особисте повідомлення';
+  String get profileButtonSendDirectMessage =>
+      'Надіслати особисте повідомлення';
 
   @override
-  String get errorCouldNotShowUserProfile => 'Не вдалося показати профіль користувача.';
+  String get errorCouldNotShowUserProfile =>
+      'Не вдалося показати профіль користувача.';
 
   @override
   String get permissionsNeededTitle => 'Потрібні дозволи';
@@ -65,13 +82,19 @@ class ZulipLocalizationsUk extends ZulipLocalizations {
   String get permissionsNeededOpenSettings => 'Відкрити налаштування';
 
   @override
-  String get permissionsDeniedCameraAccess => 'Щоб завантажити зображення, надайте Zulip додаткові дозволи в налаштуваннях.';
+  String get permissionsDeniedCameraAccess =>
+      'Щоб завантажити зображення, надайте Zulip додаткові дозволи в налаштуваннях.';
 
   @override
-  String get permissionsDeniedReadExternalStorage => 'Щоб завантажувати файли, надайте Zulip додаткові дозволи в налаштуваннях.';
+  String get permissionsDeniedReadExternalStorage =>
+      'Щоб завантажувати файли, надайте Zulip додаткові дозволи в налаштуваннях.';
 
   @override
-  String get actionSheetOptionMarkChannelAsRead => 'Позначити канал як прочитаний';
+  String get actionSheetOptionMarkChannelAsRead =>
+      'Позначити канал як прочитаний';
+
+  @override
+  String get actionSheetOptionListOfTopics => 'Список тем';
 
   @override
   String get actionSheetOptionMuteTopic => 'Заглушити тему';
@@ -92,31 +115,42 @@ class ZulipLocalizationsUk extends ZulipLocalizations {
   String get actionSheetOptionUnresolveTopic => 'Позначити як невирішене';
 
   @override
-  String get errorResolveTopicFailedTitle => 'Не вдалося позначити тему як вирішену';
+  String get errorResolveTopicFailedTitle =>
+      'Не вдалося позначити тему як вирішену';
 
   @override
-  String get errorUnresolveTopicFailedTitle => 'Не вдалося позначити тему як невирішену';
+  String get errorUnresolveTopicFailedTitle =>
+      'Не вдалося позначити тему як невирішену';
 
   @override
   String get actionSheetOptionCopyMessageText => 'Копіювати текст повідомлення';
 
   @override
-  String get actionSheetOptionCopyMessageLink => 'Копіювати посилання на повідомлення';
+  String get actionSheetOptionCopyMessageLink =>
+      'Копіювати посилання на повідомлення';
 
   @override
   String get actionSheetOptionMarkAsUnread => 'Позначити як непрочитане звідси';
 
   @override
+  String get actionSheetOptionHideMutedMessage =>
+      'Сховати заглушене повідомлення';
+
+  @override
   String get actionSheetOptionShare => 'Поширити';
 
   @override
-  String get actionSheetOptionQuoteAndReply => 'Цитата і відповідь';
+  String get actionSheetOptionQuoteMessage => 'Цитувати повідомлення';
 
   @override
-  String get actionSheetOptionStarMessage => 'Позначити повідомлення зірочкою';
+  String get actionSheetOptionStarMessage => 'Вибрати повідомлення';
 
   @override
-  String get actionSheetOptionUnstarMessage => 'Зняти позначку зірочки з повідомлення';
+  String get actionSheetOptionUnstarMessage =>
+      'Зняти позначку зірки з повідомлення';
+
+  @override
+  String get actionSheetOptionEditMessage => 'Редагувати повідомлення';
 
   @override
   String get actionSheetOptionMarkTopicAsRead => 'Позначити тему як прочитану';
@@ -136,7 +170,8 @@ class ZulipLocalizationsUk extends ZulipLocalizations {
   }
 
   @override
-  String get errorCouldNotFetchMessageSource => 'Не вдалося отримати джерело повідомлення';
+  String get errorCouldNotFetchMessageSource =>
+      'Не вдалося отримати джерело повідомлення.';
 
   @override
   String get errorCopyingFailed => 'Помилка копіювання';
@@ -152,7 +187,11 @@ class ZulipLocalizationsUk extends ZulipLocalizations {
   }
 
   @override
-  String errorFilesTooLarge(int num, int maxFileUploadSizeMib, String listMessage) {
+  String errorFilesTooLarge(
+    int num,
+    int maxFileUploadSizeMib,
+    String listMessage,
+  ) {
     String _temp0 = intl.Intl.pluralLogic(
       num,
       locale: localeName,
@@ -183,6 +222,9 @@ class ZulipLocalizationsUk extends ZulipLocalizations {
   String get errorMessageNotSent => 'Повідомлення не надіслано';
 
   @override
+  String get errorMessageEditNotSaved => 'Повідомлення не збережено';
+
+  @override
   String errorLoginCouldNotConnect(String url) {
     return 'Не вдалося підключитися до сервера:\n$url';
   }
@@ -191,7 +233,8 @@ class ZulipLocalizationsUk extends ZulipLocalizations {
   String get errorCouldNotConnectTitle => 'Не вдалося підключитися';
 
   @override
-  String get errorMessageDoesNotSeemToExist => 'Здається, цього повідомлення не існує.';
+  String get errorMessageDoesNotSeemToExist =>
+      'Здається, цього повідомлення не існує.';
 
   @override
   String get errorQuotationFailed => 'Помилка цитування';
@@ -202,7 +245,8 @@ class ZulipLocalizationsUk extends ZulipLocalizations {
   }
 
   @override
-  String get errorConnectingToServerShort => 'Помилка підключення до Zulip. Повторна спроба…';
+  String get errorConnectingToServerShort =>
+      'Помилка підключення до Zulip. Повторна спроба…';
 
   @override
   String errorConnectingToServerDetails(String serverUrl, String error) {
@@ -210,10 +254,15 @@ class ZulipLocalizationsUk extends ZulipLocalizations {
   }
 
   @override
-  String get errorHandlingEventTitle => 'Помилка обробки події Zulip. Повторна спроба підключення…';
+  String get errorHandlingEventTitle =>
+      'Помилка обробки події Zulip. Повторна спроба підключення…';
 
   @override
-  String errorHandlingEventDetails(String serverUrl, String error, String event) {
+  String errorHandlingEventDetails(
+    String serverUrl,
+    String error,
+    String event,
+  ) {
     return 'Помилка обробки події Zulip із $serverUrl; буде повторювати спробу.\n\nПомилка: $error\n\nПодія: $event';
   }
 
@@ -241,10 +290,16 @@ class ZulipLocalizationsUk extends ZulipLocalizations {
   String get errorSharingFailed => 'Поширення не вдалося';
 
   @override
-  String get errorStarMessageFailedTitle => 'Не вдалося позначити повідомлення зірочкою';
+  String get errorStarMessageFailedTitle =>
+      'Не вдалося позначити повідомлення зіркою';
 
   @override
-  String get errorUnstarMessageFailedTitle => 'Не вдалося зняти позначку зірочки з повідомлення';
+  String get errorUnstarMessageFailedTitle =>
+      'Не вдалося зняти позначку зірки з повідомлення';
+
+  @override
+  String get errorCouldNotEditMessageTitle =>
+      'Не вдалося редагувати повідомлення';
 
   @override
   String get successLinkCopied => 'Посилання скопійовано';
@@ -253,13 +308,53 @@ class ZulipLocalizationsUk extends ZulipLocalizations {
   String get successMessageTextCopied => 'Текст повідомлення скопійовано';
 
   @override
-  String get successMessageLinkCopied => 'Посилання на повідомлення скопійовано';
+  String get successMessageLinkCopied =>
+      'Посилання на повідомлення скопійовано';
 
   @override
-  String get errorBannerDeactivatedDmLabel => 'Ви не можете надсилати повідомлення деактивованим користувачам.';
+  String get errorBannerDeactivatedDmLabel =>
+      'Ви не можете надсилати повідомлення деактивованим користувачам.';
 
   @override
-  String get errorBannerCannotPostInChannelLabel => 'Ви не маєте дозволу на публікацію в цьому каналі.';
+  String get errorBannerCannotPostInChannelLabel =>
+      'Ви не маєте дозволу на публікацію в цьому каналі.';
+
+  @override
+  String get composeBoxBannerLabelEditMessage => 'Редагування повідомлення';
+
+  @override
+  String get composeBoxBannerButtonCancel => 'Відміна';
+
+  @override
+  String get composeBoxBannerButtonSave => 'Зберегти';
+
+  @override
+  String get editAlreadyInProgressTitle => 'Неможливо редагувати повідомлення';
+
+  @override
+  String get editAlreadyInProgressMessage =>
+      'Редагування уже виконується. Дочекайтеся його завершення.';
+
+  @override
+  String get savingMessageEditLabel => 'ЗБЕРЕЖЕННЯ ПРАВОК…';
+
+  @override
+  String get savingMessageEditFailedLabel => 'ПРАВКИ НЕ ЗБЕРЕЖЕНІ';
+
+  @override
+  String get discardDraftConfirmationDialogTitle =>
+      'Відмовитися від написаного повідомлення?';
+
+  @override
+  String get discardDraftForEditConfirmationDialogMessage =>
+      'При редагуванні повідомлення, текст з поля для редагування видаляється.';
+
+  @override
+  String get discardDraftForOutboxConfirmationDialogMessage =>
+      'При відновленні невідправленого повідомлення, вміст поля редагування очищається.';
+
+  @override
+  String get discardDraftConfirmationDialogConfirmButton => 'Скинути';
 
   @override
   String get composeBoxAttachFilesTooltip => 'Прикріпити файли';
@@ -274,12 +369,30 @@ class ZulipLocalizationsUk extends ZulipLocalizations {
   String get composeBoxGenericContentHint => 'Ввести повідомлення';
 
   @override
+  String get newDmSheetComposeButtonLabel => 'Написати';
+
+  @override
+  String get newDmSheetScreenTitle => 'Нове особисте повідомлення';
+
+  @override
+  String get newDmFabButtonLabel => 'Нове особисте повідомлення';
+
+  @override
+  String get newDmSheetSearchHintEmpty => 'Додати користувачів';
+
+  @override
+  String get newDmSheetSearchHintSomeSelected => 'Додати ще…';
+
+  @override
+  String get newDmSheetNoUsersFound => 'Користувачі не знайдені';
+
+  @override
   String composeBoxDmContentHint(String user) {
     return 'Повідомлення @$user';
   }
 
   @override
-  String get composeBoxGroupDmContentHint => 'Група повідомлень';
+  String get composeBoxGroupDmContentHint => 'Написати групі';
 
   @override
   String get composeBoxSelfDmContentHint => 'Занотувати щось';
@@ -290,6 +403,9 @@ class ZulipLocalizationsUk extends ZulipLocalizations {
   }
 
   @override
+  String get preparingEditMessageContentInput => 'Підготовка…';
+
+  @override
   String get composeBoxSendTooltip => 'Надіслати';
 
   @override
@@ -297,6 +413,11 @@ class ZulipLocalizationsUk extends ZulipLocalizations {
 
   @override
   String get composeBoxTopicHintText => 'Тема';
+
+  @override
+  String composeBoxEnterTopicOrSkipHintText(String defaultTopicName) {
+    return 'Вкажіть тему (або залиште “$defaultTopicName”)';
+  }
 
   @override
   String composeBoxUploadingFilename(String filename) {
@@ -325,19 +446,28 @@ class ZulipLocalizationsUk extends ZulipLocalizations {
   }
 
   @override
+  String get emptyMessageList => 'There are no messages here.';
+
+  @override
+  String get emptyMessageListSearch => 'No search results.';
+
+  @override
   String get messageListGroupYouWithYourself => 'Повідомлення з собою';
 
   @override
-  String get contentValidationErrorTooLong => 'Довжина повідомлення не повинна перевищувати 10000 символів.';
+  String get contentValidationErrorTooLong =>
+      'Довжина повідомлення не повинна перевищувати 10000 символів.';
 
   @override
   String get contentValidationErrorEmpty => 'Вам нема чого надсилати!';
 
   @override
-  String get contentValidationErrorQuoteAndReplyInProgress => 'Будь ласка, дочекайтеся завершення цитування.';
+  String get contentValidationErrorQuoteAndReplyInProgress =>
+      'Будь ласка, дочекайтеся завершення цитування.';
 
   @override
-  String get contentValidationErrorUploadInProgress => 'Дочекайтеся завершення завантаження.';
+  String get contentValidationErrorUploadInProgress =>
+      'Дочекайтеся завершення завантаження.';
 
   @override
   String get dialogCancel => 'Відміна';
@@ -396,7 +526,8 @@ class ZulipLocalizationsUk extends ZulipLocalizations {
   String get loginEmailLabel => 'Адреса електронної пошти';
 
   @override
-  String get loginErrorMissingEmail => 'Будь ласка, введіть свою електронну адресу.';
+  String get loginErrorMissingEmail =>
+      'Будь ласка, введіть свою електронну адресу.';
 
   @override
   String get loginPasswordLabel => 'Пароль';
@@ -411,13 +542,19 @@ class ZulipLocalizationsUk extends ZulipLocalizations {
   String get loginErrorMissingUsername => 'Введіть своє ім\'я користувача.';
 
   @override
-  String get topicValidationErrorTooLong => 'Довжина теми не повинна перевищувати 60 символів.';
+  String get topicValidationErrorTooLong =>
+      'Довжина теми не повинна перевищувати 60 символів.';
 
   @override
-  String get topicValidationErrorMandatoryButEmpty => 'Теми обовʼязкові в цій організації.';
+  String get topicValidationErrorMandatoryButEmpty =>
+      'Теми обовʼязкові в цій організації.';
 
   @override
-  String errorServerVersionUnsupportedMessage(String url, String zulipVersion, String minSupportedZulipVersion) {
+  String errorServerVersionUnsupportedMessage(
+    String url,
+    String zulipVersion,
+    String minSupportedZulipVersion,
+  ) {
     return '$url використовує Zulip Server $zulipVersion, який не підтримується. Мінімальною підтримуваною версією є Zulip Server $minSupportedZulipVersion.';
   }
 
@@ -427,7 +564,7 @@ class ZulipLocalizationsUk extends ZulipLocalizations {
   }
 
   @override
-  String get errorInvalidResponse => 'Сервер надіслав недійсну відповідь';
+  String get errorInvalidResponse => 'Сервер надіслав недійсну відповідь.';
 
   @override
   String get errorNetworkRequestFailed => 'Помилка запиту мережі';
@@ -448,7 +585,7 @@ class ZulipLocalizationsUk extends ZulipLocalizations {
   }
 
   @override
-  String get errorVideoPlayerFailed => 'Неможливо відтворити відео';
+  String get errorVideoPlayerFailed => 'Неможливо відтворити відео.';
 
   @override
   String get serverUrlValidationErrorEmpty => 'Будь ласка, введіть URL.';
@@ -457,10 +594,12 @@ class ZulipLocalizationsUk extends ZulipLocalizations {
   String get serverUrlValidationErrorInvalidUrl => 'Введіть дійсну URL-адресу.';
 
   @override
-  String get serverUrlValidationErrorNoUseEmail => 'Введіть URL-адресу сервера, а не свою електронну адресу.';
+  String get serverUrlValidationErrorNoUseEmail =>
+      'Введіть URL-адресу сервера, а не свою електронну адресу.';
 
   @override
-  String get serverUrlValidationErrorUnsupportedScheme => 'URL-адреса сервера має починатися з http:// або https://.';
+  String get serverUrlValidationErrorUnsupportedScheme =>
+      'URL-адреса сервера має починатися з http:// або https://.';
 
   @override
   String get spoilerDefaultHeaderText => 'Спойлер';
@@ -497,10 +636,12 @@ class ZulipLocalizationsUk extends ZulipLocalizations {
   }
 
   @override
-  String get markAsUnreadInProgress => 'Позначення повідомлень як непрочитаних…';
+  String get markAsUnreadInProgress =>
+      'Позначення повідомлень як непрочитаних…';
 
   @override
-  String get errorMarkAsUnreadFailedTitle => 'Не вдалося позначити як непрочитане';
+  String get errorMarkAsUnreadFailedTitle =>
+      'Не вдалося позначити як непрочитане';
 
   @override
   String get today => 'Сьогодні';
@@ -527,7 +668,20 @@ class ZulipLocalizationsUk extends ZulipLocalizations {
   String get userRoleUnknown => 'Невідомо';
 
   @override
+  String get searchMessagesPageTitle => 'Search';
+
+  @override
+  String get searchMessagesHintText => 'Search';
+
+  @override
+  String get searchMessagesClearButtonTooltip => 'Clear';
+
+  @override
   String get inboxPageTitle => 'Вхідні';
+
+  @override
+  String get inboxEmptyPlaceholder =>
+      'Немає непрочитаних вхідних повідомлень. Використовуйте кнопки знизу для перегляду обʼєднаної стрічки або списку каналів.';
 
   @override
   String get recentDmConversationsPageTitle => 'Особисті повідомлення';
@@ -536,19 +690,29 @@ class ZulipLocalizationsUk extends ZulipLocalizations {
   String get recentDmConversationsSectionHeader => 'Особисті повідомлення';
 
   @override
-  String get combinedFeedPageTitle => 'Комбінована стрічка';
+  String get recentDmConversationsEmptyPlaceholder =>
+      'У вас поки що немає особистих повідомлень! Чому б не розпочати бесіду?';
+
+  @override
+  String get combinedFeedPageTitle => 'Об\'єднана стрічка';
 
   @override
   String get mentionsPageTitle => 'Згадки';
 
   @override
-  String get starredMessagesPageTitle => 'Повідомлення, позначені зірочкою';
+  String get starredMessagesPageTitle => 'Вибрані повідомлення';
 
   @override
   String get channelsPageTitle => 'Канали';
 
   @override
+  String get channelsEmptyPlaceholder => 'Ви ще не підписані на жодний канал.';
+
+  @override
   String get mainMenuMyProfile => 'Мій профіль';
+
+  @override
+  String get topicsButtonLabel => 'ТЕМИ';
 
   @override
   String get channelFeedButtonTooltip => 'Стрічка каналу';
@@ -569,9 +733,6 @@ class ZulipLocalizationsUk extends ZulipLocalizations {
 
   @override
   String get unpinnedSubscriptionsLabel => 'Відкріплені';
-
-  @override
-  String get subscriptionListNoChannels => 'Канали не знайдено';
 
   @override
   String get notifSelfUser => 'Ви';
@@ -626,6 +787,9 @@ class ZulipLocalizationsUk extends ZulipLocalizations {
   String get messageIsMovedLabel => 'ПЕРЕМІЩЕНО';
 
   @override
+  String get messageNotSentLabel => 'ПОВІДОМЛЕННЯ НЕ ВІДПРАВЛЕНО';
+
+  @override
   String pollVoterNames(String voterNames) {
     return '($voterNames)';
   }
@@ -643,25 +807,69 @@ class ZulipLocalizationsUk extends ZulipLocalizations {
   String get themeSettingSystem => 'Системна';
 
   @override
-  String get openLinksWithInAppBrowser => 'Відкривати посилання за допомогою браузера додатку';
+  String get openLinksWithInAppBrowser =>
+      'Відкривати посилання за допомогою браузера додатку';
 
   @override
   String get pollWidgetQuestionMissing => 'Немає питання.';
 
   @override
-  String get pollWidgetOptionsMissing => 'У цьому опитуванні ще немає варіантів.';
+  String get pollWidgetOptionsMissing =>
+      'У цьому опитуванні ще немає варіантів.';
+
+  @override
+  String get initialAnchorSettingTitle => 'Де відкривати стрічку повідомлень';
+
+  @override
+  String get initialAnchorSettingDescription =>
+      'Можна відкривати стрічку повідомлень на першому непрочитаному повідомленні або на найновішому.';
+
+  @override
+  String get initialAnchorSettingFirstUnreadAlways =>
+      'Перше непрочитане повідомлення';
+
+  @override
+  String get initialAnchorSettingFirstUnreadConversations =>
+      'Перше непрочитане повідомлення при перегляді бесід, найновіше у інших місцях';
+
+  @override
+  String get initialAnchorSettingNewestAlways => 'Найновіше повідомлення';
+
+  @override
+  String get markReadOnScrollSettingTitle =>
+      'Відмічати повідомлення як прочитані при прокручуванні';
+
+  @override
+  String get markReadOnScrollSettingDescription =>
+      'При прокручуванні повідомлень автоматично відмічати їх як прочитані?';
+
+  @override
+  String get markReadOnScrollSettingAlways => 'Завжди';
+
+  @override
+  String get markReadOnScrollSettingNever => 'Ніколи';
+
+  @override
+  String get markReadOnScrollSettingConversations =>
+      'Тільки при перегляді бесід';
+
+  @override
+  String get markReadOnScrollSettingConversationsDescription =>
+      'Повідомлення будуть автоматично помічатися як прочитані тільки при перегляді окремої теми або особистої бесіди.';
 
   @override
   String get experimentalFeatureSettingsPageTitle => 'Експериментальні функції';
 
   @override
-  String get experimentalFeatureSettingsWarning => 'Ці опції вмикають функції, які ще розробляються та не готові. Вони можуть не працювати та викликати проблеми в інших місцях додатку.\n\nМетою цих налаштувань є експериментування людьми, що працюють над розробкою Zulip.';
+  String get experimentalFeatureSettingsWarning =>
+      'Ці опції вмикають функції, які ще розробляються та не готові. Вони можуть не працювати та викликати проблеми в інших місцях додатку.\n\nМетою цих налаштувань є експериментування людьми, що працюють над розробкою Zulip.';
 
   @override
   String get errorNotificationOpenTitle => 'Не вдалося відкрити сповіщення';
 
   @override
-  String get errorNotificationOpenAccountMissing => 'Обліковий запис, пов’язаний із цим сповіщенням, більше не існує.';
+  String get errorNotificationOpenAccountNotFound =>
+      'Обліковий запис, звʼязаний з цим сповіщенням, не знайдений.';
 
   @override
   String get errorReactionAddingFailedTitle => 'Не вдалося додати реакцію';
@@ -677,6 +885,13 @@ class ZulipLocalizationsUk extends ZulipLocalizations {
 
   @override
   String get noEarlierMessages => 'Немає попередніх повідомлень';
+
+  @override
+  String get revealButtonLabel =>
+      'Показати повідомлення заглушеного відправника';
+
+  @override
+  String get mutedUser => 'Заглушений користувач';
 
   @override
   String get scrollToBottomTooltip => 'Прокрутити вниз';
